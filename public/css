@@ -103,3 +103,55 @@ footer {
 .navigation a:hover {
   color: #f39c12; /* Couleur de survol */
 }
+
+/* Ajoutez ces styles CSS à votre feuille de style existante */
+
+.categories-and-brands {
+  display: flex; /* Utilisez un affichage flex pour créer deux colonnes */
+  justify-content: space-between; /* Espacez les éléments de manière égale entre les colonnes */
+  margin-top: 20px; /* Marge supérieure pour espacer de la section "À Propos de Nous" */
+}
+
+.categories,
+.brands {
+  flex: 1; /* Chaque colonne prend 50% de l'espace disponible */
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center; /* Centrer le contenu horizontalement */
+  display: flex;
+  flex-direction: column; /* Aligner les éléments en colonnes */
+  flex-wrap: wrap; /* Permettre l'enroulement des éléments sur plusieurs lignes */
+}
+
+.categories h2,
+.brands h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.categories ul,
+.brands ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap; /* Permettre l'enroulement des éléments sur plusieurs lignes */
+}
+
+.categories li,
+.brands li {
+  margin-bottom: 5px;
+  display: inline-block; /* Afficher les éléments en ligne */
+  background-color: #00FF00; /* Fond vert */
+  padding: 5px; /* Ajoutez de l'espace autour du texte */
+  margin-right: 10px; /* Espacement entre les éléments */
+  flex-basis: calc(20% - 10px); /* 20% de largeur avec 10px d'espace entre les éléments */
+  border-radius: 10px; /* Coins arrondis */
+}
+
+
+
+
+
+
+
+

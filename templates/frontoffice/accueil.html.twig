@@ -30,4 +30,23 @@
         <h2>À Propos de Nous</h2>
         <p>Nous sommes dédiés à fournir les meilleurs produits pour le bien-être de vos animaux. Notre équipe d'experts s'engage à vous offrir des produits de qualité supérieure.</p>
     </section>
+    
+    <section class="categories-and-brands">
+        <div class="categories">
+            <h2>Catégories</h2>
+            <ul>
+                {% for category in categorie %}
+                    <li>{{ category.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="brands">
+            <h2>Marques</h2>
+            <ul>
+                {% for marque in marque %}
+                    <li>{{ marque.nom }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
 {% endblock %}

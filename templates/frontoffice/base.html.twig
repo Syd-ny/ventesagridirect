@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}md-distribution{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Bienvenue sur md-distribution</h1>
+        <p>Votre source de produits d'hygiène et compléments d'alimentation pour animaux</p>
+    </header>
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>{{ "now"|date("Y") }} md-distribution</p>
+    </footer>
+</body>
+</html>

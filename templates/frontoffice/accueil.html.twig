@@ -1,0 +1,33 @@
+{% extends 'frontoffice/base.html.twig' %}
+
+{% block title %}Accueil - md-distribution{% endblock %}
+
+{% block content %}
+
+    <nav class="navigation">
+        <ul>
+            <li><a href="#">Accueil</a></li>
+            <li><a href="#">Produits</a></li>
+            <li><a href="#">À Propos</a></li>
+            <!-- Ajoutez d'autres liens de navigation ici -->
+        </ul>
+    </nav>
+
+    <section class="products">
+        <h2>En Vedette</h2>
+        {% for product in products %}
+            {% if product.ordre is not null %}
+                <div class="product">
+                    <img src="{{ asset('images/' ~ product.picture) }}" alt="{{ product.name }}">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </section>
+    
+    <section class="about-us">
+        <h2>À Propos de Nous</h2>
+        <p>Nous sommes dédiés à fournir les meilleurs produits pour le bien-être de vos animaux. Notre équipe d'experts s'engage à vous offrir des produits de qualité supérieure.</p>
+    </section>
+{% endblock %}

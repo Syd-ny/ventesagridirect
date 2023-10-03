@@ -1,0 +1,70 @@
+{% extends 'backoffice/main/base.html.twig' %}
+
+{% block title %}Produits{% endblock %}
+
+{% block body %}
+
+    <h1 class="mt-3 mx-3">Produits</h1>
+
+    {#% include "backoffice/fragments/_flash_message.html.twig" %#}
+
+    {#{ include('backoffice/user/_search.html.twig') }#}
+
+    <div class="text-end mb-3">
+        <a href="{#{ path('product_list', { 'sort': 'id', 'order': (app.request.query.get('sort') == 'id' and app.request.query.get('order') == 'asc') ? 'desc' : 'asc' }) }#}" class="btn btn-outline-primary mx-1">
+            Trier par nom {#% if sort == 'id' %}{% if order == 'asc' %#}<i class="bi bi-caret-up-fill"></i>{#% else %#}<i class="bi bi-caret-down-fill"></i>{#% endif %}{% endif %#}
+        </a>
+        <a href="{#{ path('product_list', { 'sort': 'login', 'order': (app.request.query.get('sort') == 'login' and app.request.query.get('order') == 'asc') ? 'desc' : 'asc' }) }#}" class="btn btn-outline-primary mx-1">
+            Trier par Prix {#% if sort == 'login' %}{% if order == 'asc' %#}<i class="bi bi-caret-up-fill"></i>{#% else %#}<i class="bi bi-caret-down-fill"></i>{#% endif %}{% endif %#}
+        </a>
+        <a href="{{ path('product_new') }}" class="btn btn-outline-info mx-3">Créer un nouveau produit</a>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Description</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Marque</th>
+                <th scope="col">Categories</th>
+                <th scope="col">Référence</th>
+                <th scope="col">Statut</th>
+                <th scope="col">ordre</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr class="table-active">
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price}} €</td>
+                <td>{{ product.marques.nom }}</td>
+                <td>
+                    {% for categorie in product.categories %}
+                        {{ categorie.name }}
+                        {% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ product.reference}}</td>
+                <td>{{ product.statuts.name }}</td>
+                <td>{{ product.ordre }}</td>
+                <td>
+                    <a href="{{ path('product_show', {'id': product.id}) }}"><i class="bi bi-eye btn btn-sm btn-success rounded"></i></a>
+                    <a href="{{ path('product_edit', {'id': product.id}) }}"><i class="bi bi-pencil btn btn-sm btn-warning rounded"></i></a>
+                    <a href="{{ path('product_delete', {'id': product.id}) }}"><i class="bi bi-trash btn btn-sm btn-danger rounded"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun produit trouvé.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- pagination -->
+        {#% include 'backoffice/fragments/_pagination.html.twig' %#}
+
+{% endblock %}

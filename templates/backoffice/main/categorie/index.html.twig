@@ -1,0 +1,49 @@
+{% extends 'backoffice/main/base.html.twig' %}
+
+{% block title %}Catégories{% endblock %}
+
+{% block body %}
+
+    <h1 class="mt-3 mx-3">Catégories</h1>
+
+    {#% include "backoffice/fragments/_flash_message.html.twig" %#}
+
+    {#{ include('backoffice/user/_search.html.twig') }#}
+
+    <div class="text-end mb-3">
+        <a href="{#{ path('categorie_list', { 'sort': 'id', 'order': (app.request.query.get('sort') == 'id' and app.request.query.get('order') == 'asc') ? 'desc' : 'asc' }) }#}" class="btn btn-outline-primary mx-1">
+            Trier par nom {#% if sort == 'id' %}{% if order == 'asc' %#}<i class="bi bi-caret-up-fill"></i>{#% else %#}<i class="bi bi-caret-down-fill"></i>{#% endif %}{% endif %#}
+        </a>
+        <a href="{{ path('categorie_new') }}" class="btn btn-outline-info mx-3">Créer une nouvelle catégorie</a>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nom</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for categorie in categories %}
+            <tr class="table-active">
+                <td>{{ categorie.id }}</td>
+                <td>{{ categorie.name }}</td>
+                <td>
+                    <a href="{{ path('categorie_show', {'id': categorie.id}) }}"><i class="bi bi-eye btn btn-sm btn-success rounded"></i></a>
+                    <a href="{{ path('categorie_edit', {'id': categorie.id}) }}"><i class="bi bi-pencil btn btn-sm btn-warning rounded"></i></a>
+                    <a href="{#{ path('categorie_delete', {'id': categorie.id}) }#}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')"><i class="bi bi-trash btn btn-sm btn-danger rounded"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun produit trouvé.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- pagination -->
+        {#% include 'backoffice/fragments/_pagination.html.twig' %#}
+
+{% endblock %}

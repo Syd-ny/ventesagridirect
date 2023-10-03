@@ -1,0 +1,3 @@
+<form method="post" action="{{ path('product_delete', {'id': product.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');" style="display: inline;">
+    <button type="submit" class="btn btn-sm btn-outline-danger mx-3 mt-3">Supprimer</button>
+</form>

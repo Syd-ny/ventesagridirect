@@ -23,10 +23,13 @@ services:
     App\Controller\Backoffice\MainController:
         tags: ['controller.service_arguments']
 
-    App\Controller\SiteController:
+    App\Controller\Frontoffice\SiteController:
         tags: ['controller.service_arguments']
 
     App\Entity\Product:
+        public: true
+
+    App\Entity\Categorie:
         public: true
 
     # add more service definitions when explicit configuration is needed

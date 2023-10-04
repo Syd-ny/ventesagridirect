@@ -148,6 +148,25 @@ footer {
   border-radius: 10px; /* Coins arrondis */
 }
 
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.product {
+  flex-basis: calc(25% - 20px); /* 25% de largeur avec 20px d'espace entre les produits */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  text-align: center;
+  box-sizing: border-box; /* Inclut les marges dans la largeur pour éviter les débordements */
+  margin-bottom: 20px; /* Espacement entre les produits */
+}
+
+
+
 
 
 

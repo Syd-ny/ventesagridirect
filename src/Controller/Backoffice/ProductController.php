@@ -138,4 +138,5 @@ class ProductController extends AbstractController
             self::PRODUCT => $product,
         ]);
     }
+
 }

@@ -1,0 +1,24 @@
+{% extends 'frontoffice/base.html.twig' %}
+
+{% block title %} {{ marque.nom }} - md-distribution{% endblock %}
+
+{% block content %}
+    <section class="products">
+        <h2>Produits de la marque {{ marque.nom }}</h2>
+        <div class="product-list">
+            {% if products is empty or products is null %}
+                <p>Aucun produit trouvé pour cette marque.</p>
+            {% else %}
+                <ul class="product-grid">
+                    {% for product in products %}
+                        <li class="product">
+                            <img src="{{ asset('images/' ~ product.picture) }}" alt="{{ product.name }}">
+                            <h3>{{ product.name }}</h3>
+                            <p>{{ product.description }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

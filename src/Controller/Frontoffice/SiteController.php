@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ProductRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\MarqueRepository;
 use App\Entity\Categorie;
 use App\Entity\Marque;
 
@@ -53,6 +54,28 @@ class SiteController extends AbstractController
 
         return $this->render('frontoffice/categorie/list_products_by_categories.html.twig', [
             'category' => $category,
+            'products' => $products,
+        ]);
+    }
+
+    /**
+     * @Route("/marque/{marqueId}", name="products_by_marque")
+     */
+    public function listProductsByMarque(int $marqueId, MarqueRepository $marqueRepository)
+    {
+        // Récupérez la marque en fonction de $marqueId
+        $marque = $marqueRepository->find($marqueId);
+
+        if (!$marque) {
+            throw $this->createNotFoundException('La marque spécifiée n\'existe pas.');
+        }
+
+        // Récupérez les produits de la marque
+        $products = $marque->getProducts();
+
+        // Passez les données nécessaires au modèle Twig
+        return $this->render('frontoffice/marque/list_products_by_marque.html.twig', [
+            'marque' => $marque,
             'products' => $products,
         ]);
     }

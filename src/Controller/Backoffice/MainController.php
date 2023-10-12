@@ -9,6 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\LoginFormType;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 /**
@@ -18,6 +22,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class MainController extends AbstractController
 {
 
+
     /**
      * Endpoint for displaying the backoffice homepage
      * 
@@ -25,6 +30,16 @@ class MainController extends AbstractController
      */
     public function home(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
+        // if ($this->getUser()) {
+        //     return $this->redirectToRoute('target_path');
+        // }
+
+        // en cas de POST + erreur
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
         $user = $this->getUser();
 
         // Créez le formulaire de connexion en utilisant le formulaire que vous avez généré
@@ -33,10 +48,11 @@ class MainController extends AbstractController
         // Récupérez les erreurs d'authentification, le cas échéant
         $error = $authenticationUtils->getLastAuthenticationError();
 
-        return $this->render('backoffice/main/base.html.twig', [
+        return $this->render('Security/login.twig.html', [
             'user' => $user,
             'loginForm' => $form->createView(),
             'error' => $error,
+            'last_username' => $lastUsername,
         ]);
     }
 

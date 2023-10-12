@@ -35,7 +35,7 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						{% block nav %}
-						{#% if is_granted("IS_AUTHENTICATED_FULLY") %#}
+						{% if is_granted("IS_AUTHENTICATED_FULLY") %}
 							<li class="nav-item">
 								<a class="nav-link" href="{{path("app_backoffice_home")}}"> | Accueil</a>
 							</li>
@@ -86,7 +86,7 @@
 									</ul>
 								</li>
 							</ul>
-						{#% else %#}
+						{% else %}
 							<li class="nav-item">
 								<a class="nav-link text-grey" href="{{ path('accueil') }}">
 								 | Frontoffice</a>
@@ -111,7 +111,7 @@
 									</ul>
 								</li>
 							</ul>
-						{#% endif %#}
+						{% endif %}
 						{% endblock %}
 				</div>
 			</div>
@@ -122,14 +122,8 @@
         <!-- Footer -->
         <footer class="container-fluid py-4 border-top text-center">
             <span class="text-muted">md-Distribution made with &hearts; by Sydney Millon !
-                <br><small>Thème :<a href="" class="link-secondary text-decoration-none">
-                        <i class="bi bi-toggle-on mx-1"></i>Roll20</a>
-                </small>
             </a>
 				</footer>
-				{#% if not app.user %}
-						{% include 'backoffice/main/login_form.html.twig' %}
-				{% endif %#}
         </span>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     </body>

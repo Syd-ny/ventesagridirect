@@ -35,15 +35,15 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						{% block nav %}
-						{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+						{#% if is_granted("IS_AUTHENTICATED_FULLY") %#}
 							<li class="nav-item">
 								<a class="nav-link" href="{{path("app_backoffice_home")}}"> | Accueil</a>
 							</li>
-							<li class="nav-item">
+							<!--<li class="nav-item">
 								<a class="nav-link" href="{{ path('user_list') }}">
 									<i class="bi bi-people"></i>
 									Utilisateurs</a>
-							</li>
+							</li>-->
 							<li class="nav-item">
 								<a class="nav-link" href="{{ path('product_list') }}">
 									<i class="bi bi-cart4"></i>
@@ -86,7 +86,7 @@
 									</ul>
 								</li>
 							</ul>
-						{% else %}
+						{#% else %#}
 							<li class="nav-item">
 								<a class="nav-link text-grey" href="{{ path('accueil') }}">
 								 | Frontoffice</a>
@@ -111,7 +111,7 @@
 									</ul>
 								</li>
 							</ul>
-						{% endif %}
+						{#% endif %#}
 						{% endblock %}
 				</div>
 			</div>

@@ -48,7 +48,7 @@ class MainController extends AbstractController
         // Récupérez les erreurs d'authentification, le cas échéant
         $error = $authenticationUtils->getLastAuthenticationError();
 
-        return $this->render('Security/login.twig.html', [
+        return $this->render('security/login.html.twig', [
             'user' => $user,
             'loginForm' => $form->createView(),
             'error' => $error,

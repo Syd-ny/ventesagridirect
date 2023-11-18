@@ -15,6 +15,7 @@ use App\Entity\Marque;
 class SiteController extends AbstractController
 {
     /**
+     * @Route("/", name="root_accueil")
      * @Route("/accueil", name="accueil")
      */
     public function accueil(ProductRepository $productRepository, EntityManagerInterface $entityManager): Response

@@ -9,7 +9,9 @@
         {% for product in products %}
             {% if product.ordre is not null %}
                 <div class="product">
-                    <img src="{{ asset('images/' ~ product.picture) }}" alt="{{ product.name }}">
+                    {% if product.picture %}
+                        <img src="{{ asset('uploads/images/' ~ product.picture) }}" alt="{{product.name}}">
+                    {% endif %}
                     <h3>{{ product.name }}</h3>
                     <p>{{ product.description }}</p>
                 </div>

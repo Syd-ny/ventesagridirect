@@ -26,7 +26,7 @@ class MarqueType extends AbstractType
             ->add('description',TextareaType::class,[
                 "label" => "Description du produit",
                 "attr" => [
-                    "placeholder" => "Saisissez la dexription du produit"
+                    "placeholder" => "Saisissez la desription de la marque"
                 ]
             ])
 

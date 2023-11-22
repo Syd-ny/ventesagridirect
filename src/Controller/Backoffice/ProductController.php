@@ -62,6 +62,17 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile) {
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+                try {
+                    $imageFile->move($this->getParameter('images_directory'), $newFilename);
+                    $product->setPicture($newFilename);
+                } catch (FileException $e) {
+                    // Gérer l'exception si quelque chose se passe pendant le téléchargement
+                }
+            }
+
             $entityManager->persist($product);
             $entityManager->flush();
 

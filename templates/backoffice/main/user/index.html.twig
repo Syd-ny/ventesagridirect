@@ -29,7 +29,7 @@
             <tr class="table-active">
                 <td>{{ user.id }}</td>
                 <td>{{ user.mail }}</td>
-                <td>{{ user.roles.name }}</td>
+                <td>{{ user.role.name }}</td>
                 <td>
                     <a href="{{ path('user_show', {'id': user.id}) }}"><i class="bi bi-eye btn btn-sm btn-success rounded"></i></a>
                     <a href="{{ path('user_edit', {'id': user.id}) }}"><i class="bi bi-pencil btn btn-sm btn-warning rounded"></i></a>

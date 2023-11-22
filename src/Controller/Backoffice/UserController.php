@@ -1,18 +1,19 @@
 <?php
 namespace App\Controller\Backoffice;
 
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use DateTime;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\EditUserType;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Service\PlayerBgColorService;
-use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/backoffice")
@@ -40,13 +41,20 @@ class UserController extends AbstractController
     /**
      * Processus commun pour la création et la modification d'utilisateur
      */
-    private function processForm(Request $request, EntityManagerInterface $entityManager, User $user): Response
+    private function processForm(Request $request, EntityManagerInterface $entityManager, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         // Mettez ici la logique commune au formulaire de création et de modification
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // Hash the password only if it's a new user or password is being changed
+            if ($user->getId() === null || $form->get('password')->isSubmitted()) {
+                $hashedPassword = $passwordEncoder->encodePassword($user, $user->getPassword());
+                $user->setPassword($hashedPassword);
+            }
+
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -67,10 +75,10 @@ class UserController extends AbstractController
      *
      * @Route("/user/new", name="user_new", methods={"GET","POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
-        return $this->processForm($request, $entityManager, $user);
+        return $this->processForm($request, $entityManager, $user, $passwordEncoder);
     }
 
     /**
@@ -78,14 +86,14 @@ class UserController extends AbstractController
      *
      * @Route("/user/edit/{id}", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, EntityManagerInterface $entityManager, Int $id): Response
+    public function edit(Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder, Int $id): Response
     {
         $user = $entityManager->getRepository(User::class)->find($id);
         if (!$user) {
             throw $this->createNotFoundException('Utilisateur non trouvé');
         }
 
-        return $this->processForm($request, $entityManager, $user);
+        return $this->processForm($request, $entityManager, $user, $passwordEncoder);
     }
 
     /**

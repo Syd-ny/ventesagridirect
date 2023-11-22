@@ -26,6 +26,15 @@ security:
                 path: app_logout
                 target: app_home
             provider: app_user_provider
+        
+        backoffice:
+            pattern: ^/backoffice
+            form_login:
+                login_path: backoffice_login
+                check_path: backoffice_login
+            logout:
+                path: backoffice_logout
+            provider: app_user_provider
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -38,6 +47,10 @@ security:
     access_control:
         #- { path: ^/backoffice, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
 
 when@test:
     security:

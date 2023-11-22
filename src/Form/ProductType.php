@@ -2,22 +2,23 @@
 
 namespace App\Form;
 
-use App\Entity\Product;
-use App\Entity\Categorie;
 use App\Entity\Marque;
 use App\Entity\Statut;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Entity\Product;
+use App\Entity\Categorie;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\AbstractType;
 use App\EventListener\UpdateOrderSubscriber;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ProductType extends AbstractType
 {
@@ -97,6 +98,13 @@ class ProductType extends AbstractType
                     '3' => '3',// Ajoutez une option vide avec la valeur null
                 ],
                 'required' => false, // Permet au champ d'être vide
+            ]);
+
+            $builder->add('image', FileType::class, [
+                'label' => 'Image du produit',
+                'mapped' => false,
+                'required' => false,
+                // Autres options si nécessaire
             ]);
             // Ajoutez l'écouteur d'événements au formulaire
             $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {

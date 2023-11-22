@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -30,7 +31,7 @@ class User
     /**
      * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="users")
      */
-    private $roles;
+    private $role;
 
     public function getId(): ?int
     {
@@ -61,15 +62,47 @@ class User
         return $this;
     }
 
-    public function getRoles(): ?role
+    public function getRoles(): array
     {
-        return $this->roles;
+        return $this->role ? [$this->role->getName()] : ['ROLE_USER'];
     }
 
-    public function setRoles(?role $roles): self
+    /**
+     * Get the name of the user's role.
+     * 
+     * @return string|null
+     */
+    public function getRole(): ?Role
     {
-        $this->roles = $roles;
+        return $this->role;
+    }
+
+    public function setRole(?role $role): self
+    {
+        $this->role = $role;
 
         return $this;
+    }
+
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Permet de nettoyer les données sensibles de l'utilisateur.
+     */
+    public function eraseCredentials()
+    {
+        // Si vous stockez des données sensibles temporaires, effacez-les ici
+    }
+
+    /**
+     * Retourne le nom d'utilisateur utilisé pour l'authentification.
+     */
+    public function getUsername(): string
+    {
+        // Remplacez 'mail' par le champ que vous utilisez comme identifiant d'utilisateur
+        return $this->mail;
     }
 }
